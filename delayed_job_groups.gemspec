@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
      "Rakefile.rb",
      "VERSION",
      "delayed_job_groups.gemspec",
-     "delayed_queue.gemspec",
      "lib/delayed_job_groups.rb",
      "lib/delayed_job_groups/active_record_groups.rb",
      "lib/delayed_job_groups/delayed_job_groups.rb",
