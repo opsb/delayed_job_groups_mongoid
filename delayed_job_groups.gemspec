@@ -13,7 +13,13 @@ Gem::Specification.new do |s|
   s.description = %q{Adds job groups to delayed_job}
   s.email = %q{oliver@opsb.co.uk}
   s.files = [
-    "VERSION"
+    ".gitignore",
+     "Gemfile",
+     "Rakefile.rb",
+     "VERSION",
+     "delayed_job_groups.gemspec",
+     "delayed_queue.gemspec",
+     "lib/delayed_job_groups.rb"
   ]
   s.homepage = %q{http://github.com/opsb/delayed_job_groups}
   s.rdoc_options = ["--charset=UTF-8"]
