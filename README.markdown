@@ -18,9 +18,14 @@ Install
     # Gemfile
     gem 'delayed_job_groups', :require => false
   
-    # config/environment.rb
-    AppName::Application.initialize!
-    require 'delayed_job_groups; # must be loaded after delayed job has guessed backend 
+    # config/application.rb
+		module YourApp
+		  class Application < Rails::Application
+		    Delayed::Worker.backend = :active_record
+		    require 'delayed_job_groups'
+				...
+			end
+		end
 
 Add migration to add lock_group column
 
