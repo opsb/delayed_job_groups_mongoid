@@ -47,3 +47,16 @@ Usage
 	 end
 	
 	 Person.create(:role => "admin").delay.send_welcome
+	
+### Job groups when methods are declared asynchonous ###
+
+	 class Person < ActiveRecord::Base
+		 job_group{ |person| person.role }
+
+		 def send_welcome
+		    ...
+		 end
+		 handle_asynchronously :send_welcome
+	 end
+
+	 Person.create(:role => "admin").send_welcome

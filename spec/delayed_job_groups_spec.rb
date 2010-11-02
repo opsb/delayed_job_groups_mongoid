@@ -30,7 +30,10 @@ class User < ActiveRecord::Base
   def send_welcome_email
     puts "thanking user"
   end
-  handle_asynchronously :send_welcome_email
+  handle_asynchronously :send_welcome_email  
+  def expensive_operation
+    puts "working hard"
+  end
 end
 
 describe Delayed::Job do
@@ -58,7 +61,7 @@ describe Delayed::Job do
     end
   end
   
-  context "with 2 jobs in the same group, from delay() calls, one unlocked and 1 job in a different group" do
+  context "with 2 jobs in the same group, from methods declared as asynchronous, one unlocked and 1 job in a different group" do
     before do
       2.times do
         User.create(:role => "admin").send_welcome_email
@@ -72,4 +75,19 @@ describe Delayed::Job do
       Delayed::Job.ready_to_run(WORKER, MAX_RUN_TIME).count.should == 1
     end
   end
+  
+  context "with 2 jobs in the same group, from delay() calls, one unlocked and 1 job in a different group" do
+    before do
+      2.times do
+        User.create(:role => "admin").delay.expensive_operation
+      end
+      1.times{ Delayed::Job.enqueue GroupedJob.new(:repository => "repo2") }      
+      Delayed::Job.first.lock_exclusively!(MAX_RUN_TIME, WORKER)
+      
+    end
+    
+    it "should find no jobs that are ready to run" do
+      Delayed::Job.ready_to_run(WORKER, MAX_RUN_TIME).count.should == 1
+    end
+  end  
 end
