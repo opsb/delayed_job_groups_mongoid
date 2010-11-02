@@ -12,20 +12,34 @@ Gem::Specification.new do |s|
   s.date = %q{2010-11-02}
   s.description = %q{Adds job groups to delayed_job}
   s.email = %q{oliver@opsb.co.uk}
+  s.extra_rdoc_files = [
+    "README.markdown"
+  ]
   s.files = [
     ".gitignore",
      "Gemfile",
+     "Gemfile.lock",
+     "README.markdown",
      "Rakefile.rb",
      "VERSION",
      "delayed_job_groups.gemspec",
      "delayed_queue.gemspec",
-     "lib/delayed_job_groups.rb"
+     "lib/delayed_job_groups.rb",
+     "lib/delayed_job_groups/active_record_groups.rb",
+     "lib/delayed_job_groups/delayed_job_groups.rb",
+     "spec/database.yml",
+     "spec/delayed_job_groups_spec.rb",
+     "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/opsb/delayed_job_groups}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Adds job groups to delayed_job}
+  s.test_files = [
+    "spec/delayed_job_groups_spec.rb",
+     "spec/spec_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

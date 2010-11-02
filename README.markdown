@@ -1,32 +1,49 @@
-<h1>delayed_job_groups</h1>
-<p>
-	Adds grouping to jobs. Only 1 job in each group will be executed regardless of the number of workers.
-</p>
+delayed job groups
+==================
 
-<h2>Requires</h2>
-<ul>
-	<li>rails 3</li>
-	<li>Latest version of delayed_job from github - current release(v2.1.0.pre2) does not support enqueue hooks</li>
-	<li>active_record backend - other backends aren't supported'</li>
-<ul>
+Adds grouping to jobs. Only 1 job in each group will be executed regardless of the number of workers.
 
-<h2>Install</h2>
-<p>
-	# Gemfile
-  gem 'delayed_job_groups', :require => false
+
+Requires
+--------
+
+* rails 3
+* Latest version of delayed_job from github - current release(v2.1.0.pre2) does not support enqueue hooks
+* active_record backend - other backends aren't supported'
+
+
+Install
+-------
+
+    # Gemfile
+    gem 'delayed_job_groups', :require => false
   
-  # application.rb
-  AppName::Application.initialize!
-  require 'delayed_job_groups; # must be loaded after delayed job has guessed backend 
-</p>
+    # application.rb
+    AppName::Application.initialize!
+    require 'delayed_job_groups; # must be loaded after delayed job has guessed backend 
 
-<h2>Usage</h2>
-<p>
-	All that's required is a block that yields the group that should be used for jobs
-</p>
-<p>
-	# active_record_model
-	class Person < ActiveRecord::Base
-	  job_group{ |person| person.department }
-	end
-</p>
+Usage
+-----
+
+### Job groups for standard jobs ###
+
+	 class ResizeImageJob < Struct.new(:format)
+		 job_group{ |resize_image_job| resize_image_job.format }
+		
+		 def perform
+			 resize_to format
+		 end
+	 end
+
+	
+### Job groups when using delay() ###
+
+	 class Person < ActiveRecord::Base
+		 job_group{ |person| person.role }
+		
+		 def send_welcome
+		    ...
+		 end
+	 end
+	
+	 Person.create(:role => "admin").delay.send_welcome

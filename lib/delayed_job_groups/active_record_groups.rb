@@ -14,9 +14,9 @@ class ActiveRecord::Base
   end
   
   def enqueue(job)
-    payload = job.payload_object
-    if payload.class.has_job_groups?
-      job.lock_group = payload.class.lock_group(payload)
+    target = job.payload_object.class == ::Delayed::PerformableMethod ? job.payload_object.object : job.payload_object    
+    if target.class.has_job_groups?
+      job.lock_group = target.class.lock_group(target)
       job.save
     end
   end  
