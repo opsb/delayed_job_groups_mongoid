@@ -39,7 +39,7 @@ Delayed::Worker.logger = Logger.new('/tmp/dj.log')
 ActiveRecord::Base.logger = Delayed::Worker.logger
 Delayed::Worker.backend = :active_record
 
-require 'delayed_job_groups'
+require 'delayed_job_groups/init.rb'
 RSpec.configure do |config|
   config.before do
     ActiveRecord::Base.connection.increment_open_transactions
