@@ -18,7 +18,7 @@ Install
     # Gemfile
     gem 'delayed_job_groups', :require => false
   
-    # application.rb
+    # config/environment.rb
     AppName::Application.initialize!
     require 'delayed_job_groups; # must be loaded after delayed job has guessed backend 
 
