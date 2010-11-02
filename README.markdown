@@ -9,7 +9,7 @@ Requires
 
 * rails 3
 * Latest version of delayed_job from github - current release(v2.1.0.pre2) does not support enqueue hooks
-* active_record backend - other backends aren't supported'
+* active_record backend - other backends aren't supported
 
 
 Install
