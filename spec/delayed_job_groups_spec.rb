@@ -40,6 +40,16 @@ describe Delayed::Job do
   MAX_RUN_TIME = 4000 # seconds? TBC
   WORKER = 'name_of_worker'
   
+  context "a job" do
+    before do
+      Delayed::Job.enqueue GroupedJob.new(:repository => "repo1")
+    end
+    
+    it "should have a job group" do
+      Delayed::Job.first.lock_group.should == "repo1"
+    end
+  end
+  
   context "with 2 jobs in the same group, one locked, one unlocked and 1 job in a different group" do
     before do
       2.times{ Delayed::Job.enqueue GroupedJob.new(:repository => "repo1") }
