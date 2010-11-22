@@ -3,54 +3,39 @@ $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'rubygems'
 require 'bundler/setup'
 require 'logger'
+require 'mongoid'
 
 
 
 ENV['RAILS_ENV'] = 'test'
 require 'rails'
 
-require 'active_record'
-config = YAML.load(File.read('spec/database.yml'))
-ActiveRecord::Base.configurations = {'test' => config['sqlite']}
-ActiveRecord::Base.establish_connection
-ActiveRecord::Migration.verbose = false
-
-ActiveRecord::Schema.define do
-  create_table :delayed_jobs, :force => true do |table|
-    table.integer  :priority, :default => 0
-    table.integer  :attempts, :default => 0
-    table.text     :handler
-    table.text     :last_error
-    table.datetime :run_at
-    table.datetime :locked_at
-    table.datetime :failed_at
-    table.string   :locked_by
-    table.string   :lock_group
-    table.timestamps
-    
-    table.integer :queue_id
-  end
+Mongoid.configure do |config|
+  name = "delayed_job_groups_mongoid"
+  host = "localhost"
+  config.master = Mongo::Connection.new.db(name)
+  config.slaves = [
+    Mongo::Connection.new(host, 27017, :slave_ok => true).db(name)
+  ]
+  config.persist_in_safe_mode = false
 end
+
 
 require 'rspec'
 require 'delayed_job'
 
 Delayed::Worker.logger = Logger.new('/tmp/dj.log')
-ActiveRecord::Base.logger = Delayed::Worker.logger
-Delayed::Worker.backend = :active_record
+
+Delayed::Worker.backend = :mongoid
+
 
 require 'delayed_job_groups/init.rb'
 RSpec.configure do |config|
-  config.before do
-    ActiveRecord::Base.connection.increment_open_transactions
-    ActiveRecord::Base.connection.transaction_joinable = false
-    ActiveRecord::Base.connection.begin_db_transaction
-  end
-  config.after do
-    if ActiveRecord::Base.connection.open_transactions != 0
-      ActiveRecord::Base.connection.rollback_db_transaction
-      ActiveRecord::Base.connection.decrement_open_transactions
-    end
-    ActiveRecord::Base.clear_active_connections!
-  end
+  require 'database_cleaner'
+  DatabaseCleaner.strategy = :truncation
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end  
+  config.filter_run :focus => true
+  config.run_all_when_everything_filtered = true  
 end

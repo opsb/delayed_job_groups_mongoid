@@ -3,3 +3,4 @@ delayed_job.sqlite3
 *.swo
 pkg
 .rmvrc
+.bundle
