@@ -34,6 +34,7 @@ GEM
     autotest-fsevent (0.2.3)
       sys-uname
     autotest-growl (0.2.6)
+    awesome_print (0.3.1)
     bson (1.1.2)
     bson_ext (1.1.2)
     builder (2.1.2)
@@ -116,6 +117,7 @@ DEPENDENCIES
   autotest
   autotest-fsevent
   autotest-growl
+  awesome_print
   bson_ext
   database_cleaner
   delayed_job (= 2.1.1)

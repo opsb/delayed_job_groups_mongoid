@@ -7,7 +7,7 @@ module Delayed
     scope :in_unlocked_group, lambda{ where(:lock_group.nin => self.locked_groups) }
     
     def self.locked_groups
-      Delayed::Job.only(:lock_group).where(:locked_by.ne => nil).map{|grouping| grouping[:lock_group]}
+      Delayed::Job.only(:lock_group).where(:locked_by.ne => nil).group.map{ |grouping| grouping["lock_group"] }
     end
 
     def self.find_available(worker_name, limit = 5, max_run_time = Worker.max_run_time)

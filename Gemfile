@@ -15,4 +15,5 @@ group :test do
   gem 'autotest-growl'  
   gem 'database_cleaner'  
   gem 'ruby-debug'
+  gem 'awesome_print'
 end

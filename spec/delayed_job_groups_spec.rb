@@ -52,16 +52,21 @@ describe Delayed::Job do
   
   context "with 2 jobs in the same group, one locked, one unlocked and 1 job in a different group" do
     before do
-      group_a_job1 = GroupedJob.new(:repository => "repo1")
-      group_a_job2 = GroupedJob.new(:repository => "repo1")
-      @group_b_job1 = GroupedJob.new(:repository => "repo2")
+      a, b, c = ['repo1', 'repo1', 'repo2'].map{ |repo| GroupedJob.new(:repository => repo) }
+      job_a, job_b, job_c = [a, b, c].map{ |group_job| Delayed::Job.enqueue group_job  }
       
-      [group_a_job1, @group_b_job1].each{ |job| Delayed::Job.enqueue job }
-      queued_job = Delayed::Job.enqueue group_a_job2
-      queued_job.lock_exclusively!(MAX_RUN_TIME, WORKER)      
+      2.times do
+        GroupedJob.new(:repository => 'repo1')
+      end
+      1.times{ GroupedJob.new(:repository => 'repo2') }
+      Delayed::Job.where(:lock_group => "repo1").first.lock_exclusively!(MAX_RUN_TIME, WORKER)
     end
     
-    it "should find no unlocked jobs" do
+    it "should have one locked group" do
+      Delayed::Job.locked_groups.should == ['repo1']
+    end
+    
+    it "should find only the job in the different group" do
       Delayed::Job.find_available(WORKER, MAX_RUN_TIME).count.should == 1
     end
   end
@@ -80,13 +85,13 @@ describe Delayed::Job do
       2.times do
         User.create(:role => "admin").send_welcome_email
       end
-      1.times{ Delayed::Job.enqueue GroupedJob.new(:repository => "repo2") }      
-      Delayed::Job.first.lock_exclusively!(MAX_RUN_TIME, WORKER)
-      
+      1.times{ User.create(:role => "PA").send_welcome_email }      
+      Delayed::Job.where(:lock_group => "admin").first.lock_exclusively!(MAX_RUN_TIME, WORKER)
     end
     
-    it "should find no jobs that are ready to run" do
+    it "should only find the job in the different group" do
       Delayed::Job.find_available(WORKER, MAX_RUN_TIME).count.should == 1
+      Delayed::Job.find_available(WORKER, MAX_RUN_TIME).first.lock_group.should == "PA"
     end
   end
   
@@ -96,12 +101,12 @@ describe Delayed::Job do
         User.create(:role => "admin").delay.expensive_operation
       end
       1.times{ Delayed::Job.enqueue GroupedJob.new(:repository => "repo2") }      
-      Delayed::Job.first.lock_exclusively!(MAX_RUN_TIME, WORKER)
-      
+      Delayed::Job.where(:lock_group => "admin").first.lock_exclusively!(MAX_RUN_TIME, WORKER)
     end
     
-    it "should find no jobs that are ready to run" do
+    it "should find only the job in the different group" do
       Delayed::Job.find_available(WORKER, MAX_RUN_TIME).count.should == 1
+      Delayed::Job.find_available(WORKER, MAX_RUN_TIME).first.lock_group.should == "repo2"
     end
   end  
 end

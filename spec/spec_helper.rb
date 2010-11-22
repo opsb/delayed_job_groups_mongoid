@@ -4,6 +4,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'logger'
 require 'mongoid'
+require 'ap'
 
 
 
