@@ -4,7 +4,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{delayed_job_groups}
+  s.name = %q{delayed_job_groups_mongoid}
   s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -15,22 +15,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [
     "README.markdown"
   ]
-  s.files = [
-    ".gitignore",
-     "Gemfile",
-     "Gemfile.lock",
-     "README.markdown",
-     "Rakefile.rb",
-     "VERSION",
-     "delayed_job_groups.gemspec",
-     "lib/delayed_job_groups.rb",
-     "lib/delayed_job_groups/active_record_groups.rb",
-     "lib/delayed_job_groups/delayed_job_groups.rb",
-     "lib/delayed_job_groups/init.rb",
-     "spec/database.yml",
-     "spec/delayed_job_groups_spec.rb",
-     "spec/spec_helper.rb"
-  ]
+  s.files = Dir.glob("lib/**/*") + %w(Gemfile delayed_job_groups_mongoid.gemspec README.markdown)  
   s.homepage = %q{http://github.com/opsb/delayed_job_groups}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
