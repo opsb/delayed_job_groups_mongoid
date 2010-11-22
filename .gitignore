@@ -2,5 +2,5 @@ delayed_job.sqlite3
 *.swp
 *.swo
 pkg
-.rmvrc
+.rvmrc
 .bundle
