@@ -10,10 +10,13 @@ gem 'bson_ext'
 group :test do
   gem 'rspec-rails'
   gem 'sqlite3-ruby'  
-  gem 'autotest'
-  gem 'autotest-fsevent'
-  gem 'autotest-growl'  
   gem 'database_cleaner'  
   gem 'ruby-debug'
   gem 'awesome_print'
+end
+
+group :local do
+  gem 'autotest'
+  gem 'autotest-fsevent'
+  gem 'autotest-growl'  
 end
