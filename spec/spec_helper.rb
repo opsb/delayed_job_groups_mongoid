@@ -34,13 +34,13 @@ Delayed::Worker.logger = Logger.new('/tmp/dj.log')
 
 Delayed::Worker.backend = :mongoid
 
-
 require 'delayed_job_groups/init.rb'
 RSpec.configure do |config|
   require 'database_cleaner'
   DatabaseCleaner.strategy = :truncation
   config.after(:each) do
-    DatabaseCleaner.clean
+    ::Mongoid.database.collections.select{ |c| c.name !~ /^system/ }.each{ |condemned| condemned.remove }    
+    # DatabaseCleaner.clean
   end  
   config.filter_run :focus => true
   config.run_all_when_everything_filtered = true  
