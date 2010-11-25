@@ -14,10 +14,15 @@ require 'rails'
 Mongoid.configure do |config|
   name = "delayed_job_groups_mongoid"
   host = "localhost"
-  config.master = Mongo::Connection.new.db(name)
-  config.slaves = [
-    Mongo::Connection.new(host, 27017, :slave_ok => true).db(name)
-  ]
+  
+  if ENV['ZENSLAP_ID']
+    config.from_hash("uri" => ENV['MONGOHQ_URL'])
+  else
+    config.master = Mongo::Connection.new.db(name)
+    config.slaves = [
+      Mongo::Connection.new(host, 27017, :slave_ok => true).db(name)
+    ]
+  end
   config.persist_in_safe_mode = false
 end
 
