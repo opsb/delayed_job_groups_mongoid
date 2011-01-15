@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    delayed_job_groups_mongoid (0.3.2)
-      bson_ext (~> 0)
+    delayed_job_groups_mongoid (0.3.3)
+      bson_ext (~> 1.1.5)
       delayed_job (~> 2.1.1)
       delayed_job_mongoid (~> 1.0.1)
       mongoid (~> 2.0.0.rc.4)
@@ -46,7 +46,7 @@ GEM
     autotest-growl (0.2.6)
     awesome_print (0.3.1)
     bson (1.1.2)
-    bson_ext (0.20.1)
+    bson_ext (1.1.5)
     builder (2.1.2)
     columnize (0.3.2)
     daemons (1.1.0)
@@ -129,7 +129,7 @@ DEPENDENCIES
   autotest-fsevent
   autotest-growl
   awesome_print
-  bson_ext (~> 0)
+  bson_ext (~> 1.1.5)
   database_cleaner
   delayed_job (~> 2.1.1)
   delayed_job_groups_mongoid!

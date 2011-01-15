@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<delayed_job>, ["~> 2.1.1"])
       s.add_runtime_dependency(%q<delayed_job_mongoid>, ["~> 1.0.1"])
       s.add_runtime_dependency(%q<mongoid>, ["~> 2.0.0.rc.4"])
-      s.add_runtime_dependency(%q<bson_ext>, ["~> 0"])
+      s.add_runtime_dependency(%q<bson_ext>, ["~> 1.1.5"])
     else
       s.add_dependency(%q<rails>, ["~> 3.0"])
       s.add_dependency(%q<delayed_job>, ["~> 2.1.1"])
@@ -62,7 +62,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<delayed_job>, ["~> 2.1.1"])
     s.add_dependency(%q<delayed_job_mongoid>, ["~> 1.0.1"])
     s.add_dependency(%q<mongoid>, ["~> 2.0.0.rc.4"])
-    s.add_dependency(%q<bson_ext>, ["~> 0"])
+    s.add_dependency(%q<bson_ext>, ["~> 1.1.5"])
   end
 end
 
