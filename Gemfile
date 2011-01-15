@@ -3,7 +3,7 @@ source :rubygems
 gem 'rails'
 gem 'delayed_job', '2.1.1'
 gem 'delayed_job_mongoid', '1.0.1'
-gem 'mongoid', '2.0.0.beta.20'
+gem 'mongoid', '~> 2.0.0.rc.4'
 gem 'bson_ext'
 
 
