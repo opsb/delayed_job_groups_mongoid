@@ -1,11 +1,7 @@
 PATH
   remote: .
   specs:
-    delayed_job_groups_mongoid (0.3.3)
-      bson_ext (~> 1.1.5)
-      delayed_job (~> 2.1.1)
-      delayed_job_mongoid (~> 1.0.1)
-      mongoid (~> 2.0.0.rc.4)
+    delayed_job_groups_mongoid (0.3.4)
       rails (~> 3.0)
 
 GEM
@@ -45,18 +41,9 @@ GEM
       sys-uname
     autotest-growl (0.2.6)
     awesome_print (0.3.1)
-    bson (1.1.2)
-    bson_ext (1.1.5)
     builder (2.1.2)
     columnize (0.3.2)
-    daemons (1.1.0)
     database_cleaner (0.6.0)
-    delayed_job (2.1.1)
-      activesupport (~> 3.0)
-      daemons
-    delayed_job_mongoid (1.0.1)
-      delayed_job (~> 2.1.1)
-      mongoid (~> 2.0)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -68,13 +55,6 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    mongo (1.1.2)
-      bson (>= 1.1.1)
-    mongoid (2.0.0.beta.20)
-      activemodel (~> 3.0)
-      mongo (~> 1.1)
-      tzinfo (~> 0.3.22)
-      will_paginate (~> 3.0.pre)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -119,7 +99,6 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
-    will_paginate (3.0.pre2)
 
 PLATFORMS
   ruby
@@ -129,12 +108,8 @@ DEPENDENCIES
   autotest-fsevent
   autotest-growl
   awesome_print
-  bson_ext (~> 1.1.5)
   database_cleaner
-  delayed_job (~> 2.1.1)
   delayed_job_groups_mongoid!
-  delayed_job_mongoid (~> 1.0.1)
-  mongoid (~> 2.0.0.rc.4)
   rails (~> 3.0)
   rspec-rails
   ruby-debug
