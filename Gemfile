@@ -2,6 +2,12 @@ source :rubygems
 
 gemspec
 
+group :development do
+  gem 'autotest'
+  gem 'autotest-fsevent'
+  gem 'autotest-growl'  
+end
+
 group :test do
   gem 'mongoid', '2.0.0.beta.20'
   gem 'bson', '1.2.0'
@@ -16,10 +22,4 @@ group :test do
   gem 'awesome_print'
   gem 'timecop'
   gem 'rake'
-end
-
-group :local do
-  gem 'autotest'
-  gem 'autotest-fsevent'
-  gem 'autotest-growl'  
 end
